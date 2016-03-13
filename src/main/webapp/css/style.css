@@ -1,0 +1,84 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+.adderBack {
+    position: absolute;
+    width: 56%;
+    left: 50%;
+    top: 130px;
+    margin-left: -38%;
+    margin-bottom: 100px;
+    background-color: rgba(156, 39, 176, 0.5);
+    border-radius: 20px;
+}
+.adderContent {
+    position: relative;
+    width: 90%;
+    left: 5%;
+    height: 90%;
+    top: 5%;    
+}
+.adderFirst {
+    width: 66%;
+}
+.adderSecond {
+    width: 33%;
+    color: #FFFFFF;
+    text-align: center;
+}
+.inputPickup {
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    resize: none;
+    height: 75px;
+}
+.myList {
+    position: fixed;
+    top: 0%;
+    right: 0px;
+    height: 100%;
+    width: 20%;
+    background-color: rgba(156, 39, 176, 0.5);
+    z-index: -1;
+}
+.innerList {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    background-color: #FFFFFF;
+    top: 80px;
+    height: 75%;
+    overflow-y: scroll;
+    border-radius: 10px;
+}
+.myIconLarge {
+    font-size: 90px;
+}
+.indented {
+    padding-left: 20px;    
+}
+.dropBottom {
+    padding-bottom: 10px;
+}
+.myIconLarge:hover {
+    color: rgba(156, 39, 176, 1);    
+}
+.mySmallIcon:hover {
+    color: rgba(156, 39, 176, 1); 
+}
+.fixedBottom {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
