@@ -21,7 +21,7 @@
         <div class="row card-panel">
             <div class="col s12 m12 16">
                 <div class="col">
-                    <form action="#" method="POST" class="col">
+                    <form action="SignUp" method="POST" class="col">
                         <div class="row">
                             <div class="input-field col s12">
                                 <input type="text" name="displayName" id="displayName" placeholder="Full Name" required autofocus>
