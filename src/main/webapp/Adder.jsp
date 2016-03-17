@@ -16,9 +16,13 @@
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
+        <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
         <script>
             function addToList() {
                 var current = $(".inputPickup").val();
+                
+                responsiveVoice.speak(current, "Australian Female");
+                
                 if (current.length > 0) {
                     var content = $("#tries").html();
                     var split = content.split("<li");
