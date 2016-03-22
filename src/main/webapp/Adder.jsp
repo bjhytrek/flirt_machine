@@ -21,7 +21,7 @@
             function addToList() {
                 var current = $(".inputPickup").val();
                 
-                responsiveVoice.speak(current, "Australian Female");
+                responsiveVoice.speak(current, "Spanish Latin American Female");
                 
                 if (current.length > 0) {
                     var content = $("#tries").html();

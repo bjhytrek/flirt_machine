@@ -7,13 +7,6 @@ package flirtMachine;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jbeag_000
  */
-@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
-public class SignUp extends HttpServlet {
+@WebServlet(name = "CreateAccount", urlPatterns = {"/CreateAccount"})
+public class CreateAccount extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,8 +30,19 @@ public class SignUp extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
-        
+            throws ServletException, IOException {
+        if (request.getSession().getAttribute("loggedIn") != null) {
+            System.out.println("inside");
+            if (request.getSession().getAttribute("loggedIn") == "true") {
+                request.getRequestDispatcher("myList.jsp").forward(request, response); //check the jsp name
+            }
+            else {
+                request.getRequestDispatcher("signUp.jsp").forward(request, response);                 
+            }            
+        }
+        else {
+            request.getRequestDispatcher("signUp.jsp").forward(request, response);  
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,13 +57,7 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -73,13 +71,7 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

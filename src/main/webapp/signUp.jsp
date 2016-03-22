@@ -9,11 +9,30 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="js/materialize.js"></script>
+        <script src="js/init.js"></script>
+        <script>
+            function signUp() {
+                var displayName = $("#displayName").val();
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var url = "CheckUsername";
+                var data = {'displayName': displayName, 'username': username, 'password': password};
+                $.post(url, data, function(response) {
+                    console.log(response);
+                    if (response == "valid") {
+                        window.location.replace("SignIn");
+                    } 
+                    else {
+                        $(".credError").show();
+                    }
+                });
+            }
+        </script>
         <title>Sign Up</title>
     </head>
     <body>
@@ -22,7 +41,7 @@
         <div class="row card-panel">
             <div class="col s12 m12 16">
                 <div class="col">
-                    <form action="SignUp" method="POST" class="col">
+                    <div class="col">
                         <div class="row">
                             <div class="input-field col s12">
                                 <input type="text" name="displayName" id="displayName" placeholder="Full Name" required autofocus>
@@ -36,10 +55,13 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <input type="password" name="password" id="password" placeholder="Password" required>
-                                <a class="waves-effect waves-light btn"><span><input type="submit" name="signUp" id="signIn" value="Sign Up"></span></a>
+                                <a class="waves-effect waves-light btn"><span><input type="button" name="signUp" id="signIn" value="Sign Up" onclick="signUp()"></span></a>
+                            </div>
+                            <div class="credError" style="display:none;">
+                                Unavailable username...
                             </div>
                         </div>        
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

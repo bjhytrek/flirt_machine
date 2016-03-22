@@ -7,11 +7,7 @@ package flirtMachine;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -24,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jbeag_000
  */
-@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
-public class SignUp extends HttpServlet {
+@WebServlet(name = "CheckUsername", urlPatterns = {"/CheckUsername"})
+public class CheckUsername extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +34,28 @@ public class SignUp extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        boolean signInCorrect = false;
+        String displayName = request.getParameter("displayName");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String name = "";//get the full name from the database
+        int id = 0;
         
+        GetUsers userGetter = new GetUsers();
+        boolean exists = userGetter.existUsername(username, password, displayName);
+        if (exists) {            
+            response.setHeader("Cache-Control", "no-cache");        
+            response.getWriter().write("invalid");
+        }
+        else {
+            request.setAttribute("currentUserName", username);
+            request.setAttribute("currentName", name);
+            request.setAttribute("currentId", id);
+            request.getSession().setAttribute("correctLogin", "true");
+            request.getSession().setAttribute("loggedIn", "true");
+            response.setHeader("Cache-Control", "no-cache");        
+            response.getWriter().write("valid");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,9 +73,9 @@ public class SignUp extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -76,9 +93,9 @@ public class SignUp extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
