@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <input type="password" name="password" id="password" placeholder="Password" required>
-                                <a class="waves-effect waves-light btn"><span><input type="button" name="signIn" id="signIn" value="Login" onclick="login()"></span></a>
+                                <a class="waves-effect waves-light btn purple"><span><input type="button" name="signIn" id="signIn" value="Login" onclick="login()"></span></a>
                             </div>
                             <div class="credError" style="display:none;">
                                 Invalid username or password
