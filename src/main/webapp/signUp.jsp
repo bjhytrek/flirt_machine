@@ -36,6 +36,7 @@
         <title>Sign Up</title>
     </head>
     <body>
+        <%@ include file="components/header.jsp" %> 
         <h1>Sign Up</h1>
         <div class="row card-panel">
             <div class="col s12 m12 16">
@@ -64,5 +65,6 @@
                 </div>
             </div>
         </div>
+        <%@ include file="components/footer.jsp" %> 
     </body>
 </html>

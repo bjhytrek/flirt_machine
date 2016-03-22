@@ -12,6 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>My List</h1>
+        <%@ include file="components/header.jsp" %>
+        <main>
+            <h1>My List</h1>
+            
+        </main>
+        <%@ include file="components/footer.jsp" %>
     </body>
 </html>

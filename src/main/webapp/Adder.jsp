@@ -55,25 +55,8 @@
         <title>Add Pickups</title>
     </head>
     <body>
-        <nav class="purple lighten-1" role="navigation">
-            <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Flirt Machine</a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="#">My Pickups</a></li>
-                    <li><a href="#">Popular</a></li>
-                    <li><a href="#">Add</a></li>
-                    <li><a href="#">LogOut</a></li>
-                </ul>
-
-                <ul id="nav-mobile" class="side-nav">
-                    <li><a href="#">My Pickups</a></li>
-                    <li><a href="#">Popular</a></li>
-                    <li><a href="#">Add</a></li>
-                    <li><a href="#">LogOut</a></li>
-                </ul>
-                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-            </div>
-        </nav>
-        <main>
+             <main>
+                 <%@ include file="components/header.jsp" %>
             <div class="container">
                 <div class="adderBack">
                     <table class="adderContent">
@@ -178,12 +161,7 @@
                     </div>
                 </div>
             </div>
+            <%@ include file="components/footer.jsp" %>
         </main>           
-        <footer class="page-footer purple fixedBottom">
-            <div class="container">
-                <a class="pink-text text-lighten-5" href="http://materializecss.com">Made by Roman Sanchez, Brendan Hytrek, and Jared Beagley</a>
-                <br>&nbsp;
-            </div>
-        </footer>
-    </body>
+            </body>
 </html>
