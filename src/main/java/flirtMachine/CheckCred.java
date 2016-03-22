@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jbeag_000
  */
-@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
-public class SignUp extends HttpServlet {
+@WebServlet(name = "CheckCred", urlPatterns = {"/CheckCred"})
+public class CheckCred extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,6 +38,51 @@ public class SignUp extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        if (request.getSession().getAttribute("loggedIn") != null) {
+            if (request.getSession().getAttribute("loggedIn") == "true") {
+                request.getRequestDispatcher("myList.jsp").forward(request, response); //check the jsp name
+            }
+            else {
+                System.out.println("here1");
+                checkCredentials(request, response);
+            }
+        }
+        else {
+            System.out.println("here2");
+            checkCredentials(request, response);
+        }
+    }
+    
+    public void checkCredentials(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, IOException {
+        boolean signInCorrect = false;
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String name = "";//get the full name from the database
+        int id = 0;
+
+        GetUsers userGetter = new GetUsers();
+        String[] user = userGetter.getUserByUsernamePassword(username, password);
+        
+        if (user[0].equals("notauser")) {
+            signInCorrect = false;            
+            request.getSession().setAttribute("correctLogin", "false");
+            request.getSession().setAttribute("loggedIn", "false");
+            response.setHeader("Cache-Control", "no-cache");        
+            response.getWriter().write("incorrect");
+        }
+        else {            
+            request.setAttribute("currentUserName", username);
+            request.setAttribute("currentName", name);
+            request.setAttribute("currentId", id);
+            request.getSession().setAttribute("correctLogin", "true");
+            request.getSession().setAttribute("loggedIn", "true");
+            signInCorrect = true;
+            name = user[0];
+            id = Integer.parseInt(user[2]);
+            response.setHeader("Cache-Control", "no-cache");        
+            response.getWriter().write("correct");
+        }
+        
         
     }
 
@@ -56,9 +101,9 @@ public class SignUp extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckCred.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckCred.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -76,9 +121,9 @@ public class SignUp extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckCred.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckCred.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
