@@ -9472,9 +9472,9 @@ input[type=checkbox]:not(:disabled) ~ .lever:active:after {
   font-size: 0.8rem;
 }
 
-select {
+/*select {
   display: none;
-}
+}*/
 
 select.browser-default {
   display: block;
