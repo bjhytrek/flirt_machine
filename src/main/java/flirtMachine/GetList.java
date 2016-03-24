@@ -7,6 +7,8 @@ package flirtMachine;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +35,15 @@ public class GetList extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
        
+        
+        GetUsers getUser = new GetUsers();
+        int userId = (int)request.getSession().getAttribute("currentId");
+        List<String> userPickups= new ArrayList<>();
+        userPickups = getUser.getPickupLine(userId);
+        
+        request.setAttribute("pickUps", userPickups);
+        request.getRequestDispatcher("myList.jsp").forward(request, response);
+        
         
         
     }

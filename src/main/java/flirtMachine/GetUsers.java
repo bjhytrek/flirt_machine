@@ -11,6 +11,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -42,10 +44,30 @@ public class GetUsers {
             stmt = conn.createStatement();
             String sql;
             sql = "INSERT INTO pickup (content) VALUES (\'" + pickUpLine + "\');";// INSERT INTO user_pickup (user_id, pickup_id) VALUES (" + userId + ", (SELECT pickup_id FROM pickup WHERE pickup_id = (SELECT max(pickup_id) FROM pickup))); ";
-            
+
             System.out.println(sql);
-            
+
             int rs = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+            //rs.close();
+            stmt.close();
+            conn.close();
+            // 
+            conn = null;
+            stmt = null;
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            System.out.println(pickUpLine);
+            stmt = conn.createStatement();
+            sql = "INSERT INTO user_pickup (user_id, pickup_id) VALUES (" + userId + ", " + rs + ");";
+
+            System.out.println(sql);
+
+            stmt.executeUpdate(sql);
 
             //rs.close();
             stmt.close();
@@ -53,6 +75,50 @@ public class GetUsers {
         } catch (Exception e) {
 
         }
+    }
+
+    public List<String> getPickupLine(int userId) {
+        List<String> lines = new ArrayList<>();
+        try {
+            String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
+
+            //Database credentials
+            String USER = "flirt";
+            String PASS = "flirt-pass";
+
+            Connection conn = null;
+            Statement stmt = null;
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            stmt = conn.createStatement();
+            String sql;
+            sql = "SELECT p.content FROM user_pickup up INNER JOIN pickup p ON up.pickup_id = p.pickup_id WHERE up.user_id = " + userId + ";";
+
+            System.out.println(sql);
+           
+            ResultSet rs2 = stmt.executeQuery(sql);
+
+            int lineCount = 0;
+            
+            
+            while (rs2.next()) {
+                String line = rs2.getString("content");
+                System.out.println(line);
+                lines.add(line);
+                lineCount++;
+            }
+            rs2.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+
+        }
+        return lines;
     }
 
     public boolean existUsername(String username, String password, String displayName) throws ClassNotFoundException, SQLException {

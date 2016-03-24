@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\GitHub\flirt_machine\src\main\java\flirtMachine\CheckUsername.java
 D:\GitHub\flirt_machine\src\main\java\flirtMachine\Login.java
 D:\GitHub\flirt_machine\src\main\java\flirtMachine\Logout.java
@@ -10,3 +11,17 @@ D:\GitHub\flirt_machine\src\main\java\flirtMachine\CreateAccount.java
 D:\GitHub\flirt_machine\src\main\java\flirtMachine\SignIn.java
 D:\GitHub\flirt_machine\src\main\java\flirtMachine\CheckCred.java
 D:\GitHub\flirt_machine\src\main\java\flirtMachine\New.java
+=======
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/CheckUsername.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/SignUp.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/GetUsers.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/CreateAccount.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/GetList.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/Logout.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/SignIn.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/CheckCred.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/New.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/Add.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/AddPickup.java
+/Users/mac_lappy/flirt_machine/src/main/java/flirtMachine/Login.java
+>>>>>>> a03a759d4d9d39f96cd7c9f0a2712bb77f358d14
