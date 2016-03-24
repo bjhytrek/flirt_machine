@@ -38,7 +38,7 @@ public class AddPickup extends HttpServlet {
         System.out.println(request.getParameter("currentId"));
         int currentId = (int)request.getSession().getAttribute("currentId");
         getUsers.addPickupLine(currentId, request.getParameter("pickupLine"));
-        request.getRequestDispatcher("myList.jsp").forward(request, response);
+        request.getRequestDispatcher("GetList").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
