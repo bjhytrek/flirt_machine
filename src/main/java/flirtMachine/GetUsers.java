@@ -38,11 +38,13 @@ public class GetUsers {
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            System.out.println("Creating statement...");
+            System.out.println("Creating statement2...");
             stmt = conn.createStatement();
             String sql;
-            sql = "INSERT INTO pickup (content) VALUES (" + pickUpLine + ")'; ";// INSERT INTO user_pickup (user_id, pickup_id) VALUES (" + userId + ", (SELECT pickup_id FROM pickup WHERE pickup_id = (SELECT max(pickup_id) FROM pickup))); ";
-
+            sql = "INSERT INTO pickup (content) VALUES (" + pickUpLine + ")';";// INSERT INTO user_pickup (user_id, pickup_id) VALUES (" + userId + ", (SELECT pickup_id FROM pickup WHERE pickup_id = (SELECT max(pickup_id) FROM pickup))); ";
+            
+            System.out.println(sql);
+            
             ResultSet rs = stmt.executeQuery(sql);
 
             rs.close();
