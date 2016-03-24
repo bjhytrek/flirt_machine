@@ -20,11 +20,10 @@ public class GetUsers {
 
     public GetUsers() {
     }
-    
-    public boolean existUsername(String username, String password, String displayName) throws ClassNotFoundException, SQLException {
-        int userCount = 0;
-        try {  
-            String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+
+    public void addPickupLine(int userId, String pickUpLine) {
+        try {
+            String JDBC_DRIVER = "com.mysql.jdbc.Driver";
             String DB_URL = "jdbc:mysql://localhost/flirt_machine";
 
             //Database credentials
@@ -32,34 +31,65 @@ public class GetUsers {
             String PASS = "flirt-pass";
 
             Connection conn = null;
-            Statement stmt = null;        
+            Statement stmt = null;
 
             Class.forName("com.mysql.jdbc.Driver");
 
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql;
+            sql = "INSERT INTO pickup (content) VALUES (" + pickUpLine + ")'; ";// INSERT INTO user_pickup (user_id, pickup_id) VALUES (" + userId + ", (SELECT pickup_id FROM pickup WHERE pickup_id = (SELECT max(pickup_id) FROM pickup))); ";
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+
+        }
+    }
+
+    public boolean existUsername(String username, String password, String displayName) throws ClassNotFoundException, SQLException {
+        int userCount = 0;
+        try {
+            String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
+
+            //Database credentials
+            String USER = "flirt";
+            String PASS = "flirt-pass";
+
+            Connection conn = null;
+            Statement stmt = null;
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
             sql = "SELECT * FROM user WHERE username='" + username + "';";
-            ResultSet rs = stmt.executeQuery(sql);            
+            ResultSet rs = stmt.executeQuery(sql);
 
-            while(rs.next()){                           
+            while (rs.next()) {
                 userCount++;
             }
             rs.close();
             stmt.close();
-            conn.close();                       
-        }
-        catch (Exception e) {
-            
+            conn.close();
+        } catch (Exception e) {
+
         }
         if (userCount > 0) {
             return true;
-        }
-        else {
-            String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+        } else {
+            String JDBC_DRIVER = "com.mysql.jdbc.Driver";
             String DB_URL = "jdbc:mysql://localhost/flirt_machine";
 
             //Database credentials
@@ -67,32 +97,32 @@ public class GetUsers {
             String PASS = "flirt-pass";
 
             Connection conn = null;
-            Statement stmt = null;        
+            Statement stmt = null;
 
             Class.forName("com.mysql.jdbc.Driver");
 
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
             sql = "INSERT INTO user (username, password, name) VALUES('" + username + "', '" + password + "', '" + displayName + "');";
-            stmt.executeUpdate(sql);            
+            stmt.executeUpdate(sql);
 
             stmt.close();
             conn.close();
-            
+
             return false;
-        } 
+        }
     }
-    
+
     public String[] getUserByUsernamePassword(String username, String password) {
         String name = "";
         String myUsername = "";
         String id = "";
-        try {  
-            String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+        try {
+            String JDBC_DRIVER = "com.mysql.jdbc.Driver";
             String DB_URL = "jdbc:mysql://localhost/flirt_machine";
 
             //Database credentials
@@ -100,12 +130,12 @@ public class GetUsers {
             String PASS = "flirt-pass";
 
             Connection conn = null;
-            Statement stmt = null;        
+            Statement stmt = null;
 
             Class.forName("com.mysql.jdbc.Driver");
 
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
@@ -115,29 +145,27 @@ public class GetUsers {
 
             int userCount = 0;
 
-            while(rs.next()){
+            while (rs.next()) {
                 name = rs.getString("name");
-                id = Integer.toString(rs.getInt("user_id"));           
+                id = Integer.toString(rs.getInt("user_id"));
                 userCount++;
             }
             rs.close();
             stmt.close();
             conn.close();
-        }
-        catch (Exception e) {
-            
+        } catch (Exception e) {
+
         }
         if (name != "") {
             String[] myUser = new String[3];
             myUser[0] = name;
             myUser[1] = username;
             myUser[2] = id;
-            
+
             return myUser;
-        }
-        else {
+        } else {
             String[] myUser = new String[1];
-            
+
             myUser[0] = "notauser";
             return myUser;
         }
