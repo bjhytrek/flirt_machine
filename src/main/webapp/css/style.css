@@ -6,6 +6,16 @@
  * Made By MaterializeCSS.com
  */
 
+.loginInput {
+    margin: auto;
+    text-align: center;
+}
+.login {
+    margin: auto;
+    margin-top: 100px;
+    text-align: center;
+    width: 25%;
+}
 .icon-block {
   padding: 0 15px;
 }
