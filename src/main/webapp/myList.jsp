@@ -15,11 +15,20 @@
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
+        
     </head>
     <body>
         <%@ include file="components/header.jsp" %>
         <main>
             <h1>My List</h1>
+            <div class="container">
+                <ul>
+                    <li>first</li>
+                    
+
+                </ul>
+
+            </div>
             
         </main>
         <%@ include file="components/footer.jsp" %>
