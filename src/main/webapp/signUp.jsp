@@ -36,11 +36,25 @@
         <title>Sign Up</title>
     </head>
     <body>
-        <%@ include file="components/header.jsp" %> 
-        <div class="row card-panel">
+        <header>
+            <nav class="purple lighten-1" role="navigation">
+                    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Flirt Machine</a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="Login">Sign In</a></li>
+                        </ul>
+
+                        <ul id="nav-mobile" class="side-nav">
+                            <li><a href="Login">Sign In</a></li>
+                        </ul>
+                        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+                    </div>
+            </nav>
+
+        </header>
+        <div class="row card-panel container login">
             <div class="col s12 m12 16">
                 <div class="col">
-                    <div class="col">
+                    <div class="col loginInput">
                         <div class="row">
                             <div class="input-field col s12">
                                 <input type="text" name="displayName" id="displayName" placeholder="Full Name" required autofocus>

@@ -36,17 +36,31 @@
     </head>
     <body>
         <main>
-            <%@ include file="components/header.jsp" %>
-        <div class="row card-panel">
+            <header>
+            <nav class="purple lighten-1" role="navigation">
+                    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Flirt Machine</a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="CreateAccount">Sign Up</a></li>
+                        </ul>
+
+                        <ul id="nav-mobile" class="side-nav">
+                            <li><a href="CreateAccount">Sign Up</a></li>
+                        </ul>
+                        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+                    </div>
+            </nav>
+
+        </header>
+        <div class="row card-panel container login">
             <div class="col s12 m12 16">
-                <div class="col">
-                    <div class="row">
-                        <div class="input-field col s12">
+                <div class="col loginInput">
+                    <div class="row loginInput">
+                        <div class="input-field col s12 loginInput">
                             <input type="text" name="username" id="username" placeholder="Username" required autofocus>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="input-field col s12">
+                    <div class="row loginInput">
+                        <div class="input-field col s12 loginInput">
                             <input type="password" name="password" id="password" placeholder="Password" required>
                             <a class="waves-effect waves-light btn purple"><span><input type="button" name="signIn" id="signIn" value="Login" onclick="login()"></span></a>
                         </div>
