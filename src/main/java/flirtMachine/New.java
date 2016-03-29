@@ -7,6 +7,7 @@ package flirtMachine;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +34,12 @@ public class New extends HttpServlet {
             throws ServletException, IOException {
         if (request.getSession().getAttribute("loggedIn") != null) {
             if (request.getSession().getAttribute("loggedIn") == "true") {
-                request.getRequestDispatcher("Adder.jsp").forward(request, response); //check the jsp name
+                request.getRequestDispatcher("Adder.jsp").forward(request, response);
+                int userId = (int)request.getSession().getAttribute("currentId");
+                GetUsers getUsers = new GetUsers();
+                List<String> myPickups = getUsers.getPickupLine(userId);
+                System.out.println(myPickups);
+                
             }            
             else {
                 request.getRequestDispatcher("signIn.jsp").forward(request, response);                 
