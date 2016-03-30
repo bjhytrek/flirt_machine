@@ -41,7 +41,7 @@ public class GetList extends HttpServlet {
         List<String> userPickups= new ArrayList<>();
         userPickups = getUser.getPickupLine(userId);
         
-        request.setAttribute("pickUps", userPickups);
+        request.setAttribute("pickups", userPickups);
         request.getRequestDispatcher("myList.jsp").forward(request, response);
         
         
