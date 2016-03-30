@@ -3,8 +3,9 @@
     Created on : Mar 16, 2016, 10:52:11 PM
     Author     : Jbeag_000
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%= request.getAttribute("pickups") %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,9 +22,13 @@
         <%@ include file="components/header.jsp" %>
         <main>
             <h1>My List</h1>
-            <div class="container">
+            <div class="container myList">
                 <ul>
-                    <li>first</li>
+                    <c:forEach items="${pickups}" var="pickup" >
+                        <li>
+                            <c:out value="${pickup}" />
+                        </li>
+                    </c:forEach>
                     
                     
                 </ul>
