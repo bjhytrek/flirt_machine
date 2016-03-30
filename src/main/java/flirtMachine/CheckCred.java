@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -40,7 +41,7 @@ public class CheckCred extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         if (request.getSession().getAttribute("loggedIn") != null) {
             if (request.getSession().getAttribute("loggedIn") == "true") {
-                request.getRequestDispatcher("myList.jsp").forward(request, response); //check the jsp name
+                request.getRequestDispatcher("GetList").forward(request, response); //check the jsp name
             }
             else {
                 System.out.println("here1");
@@ -61,7 +62,10 @@ public class CheckCred extends HttpServlet {
         int id = 0;
 
         GetUsers userGetter = new GetUsers();
-        String[] user = userGetter.getUserByUsernamePassword(username, password);
+        String[] user = userGetter.getUserByUsernamePassword(username);
+        
+        String hashed = user[3];
+        
         
         if (user[0].equals("notauser")) {
             signInCorrect = false;            
@@ -70,20 +74,27 @@ public class CheckCred extends HttpServlet {
             response.setHeader("Cache-Control", "no-cache");        
             response.getWriter().write("incorrect");
         }
-        else {            
-            request.setAttribute("currentUserName", username);
-            request.getSession().setAttribute("correctLogin", "true");
-            request.getSession().setAttribute("loggedIn", "true");
-            signInCorrect = true;
-            name = user[0];
-            request.getSession().setAttribute("currentName", name);
-            id = Integer.parseInt(user[2]);
-            request.getSession().setAttribute("currentId", id);
-            response.setHeader("Cache-Control", "no-cache");        
-            response.getWriter().write("correct");
-        }
-        
-        
+        else {    
+            if (BCrypt.checkpw(password, hashed)) {
+                request.setAttribute("currentUserName", username);
+                request.getSession().setAttribute("correctLogin", "true");
+                request.getSession().setAttribute("loggedIn", "true");
+                signInCorrect = true;
+                name = user[0];
+                request.getSession().setAttribute("currentName", name);
+                id = Integer.parseInt(user[2]);
+                request.getSession().setAttribute("currentId", id);
+                response.setHeader("Cache-Control", "no-cache");        
+                response.getWriter().write("correct");
+            }
+            else {
+                signInCorrect = false;            
+                request.getSession().setAttribute("correctLogin", "false");
+                request.getSession().setAttribute("loggedIn", "false");
+                response.setHeader("Cache-Control", "no-cache");        
+                response.getWriter().write("incorrect");
+            }            
+        }       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

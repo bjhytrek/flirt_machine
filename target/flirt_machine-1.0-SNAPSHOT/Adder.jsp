@@ -73,7 +73,7 @@
                                     <textarea class="inputPickup" name="pickupLine" rows="4" placeholder="Enter text here..."></textarea>
                                 </td>
                                 <td class="adderSecond">
-                                    <i class="material-icons myIconLarge" onclick="addToList()">volume_up</i>
+                                    <i class="material-icons myIcon myIcon--large" onclick="addToList()">volume_up</i>
                                 </td>
                             </tr>
                             <tr>
