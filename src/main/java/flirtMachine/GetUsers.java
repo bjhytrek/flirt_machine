@@ -47,8 +47,8 @@ public class GetUsers {
 
             System.out.println(sql);
 
-            int rs = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-
+            stmt.executeUpdate(sql);
+            
             //rs.close();
             stmt.close();
             conn.close();
@@ -63,7 +63,29 @@ public class GetUsers {
 
             System.out.println(pickUpLine);
             stmt = conn.createStatement();
-            sql = "INSERT INTO user_pickup (user_id, pickup_id) VALUES (" + userId + ", " + rs + ");";
+            sql = "SELECT max(pickup_id) AS pickup_id FROM pickup;";
+
+            System.out.println(sql);
+
+            ResultSet rs = stmt.executeQuery(sql);
+            int insertIndex = -1;
+            System.out.println(insertIndex);
+            while (rs.next()) {
+                insertIndex = rs.getInt("pickup_id");
+            }
+            System.out.println("index: " + insertIndex);
+            
+            conn = null;
+            stmt = null;
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            System.out.println(pickUpLine);
+            stmt = conn.createStatement();
+            sql = "INSERT INTO user_pickup (user_id, pickup_id) VALUES (" + userId + ", " + insertIndex + ");";
 
             System.out.println(sql);
 
