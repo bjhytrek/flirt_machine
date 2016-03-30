@@ -33,13 +33,13 @@ public class New extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getSession().getAttribute("loggedIn") != null) {
-            if (request.getSession().getAttribute("loggedIn") == "true") {
-                request.getRequestDispatcher("Adder.jsp").forward(request, response);
+            if (request.getSession().getAttribute("loggedIn") == "true") {                
                 int userId = (int)request.getSession().getAttribute("currentId");
                 GetUsers getUsers = new GetUsers();
                 List<String> myPickups = getUsers.getPickupLine(userId);
                 System.out.println(myPickups);
-                
+                request.setAttribute("currentPickups", myPickups);
+                request.getRequestDispatcher("Adder.jsp").forward(request, response);
             }            
             else {
                 request.getRequestDispatcher("signIn.jsp").forward(request, response);                 

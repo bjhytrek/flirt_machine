@@ -5,7 +5,16 @@
  *
  * Made By MaterializeCSS.com
  */
-
+.currentMyList {
+    width: 98%;
+    padding-left: 2%;
+    border-bottom: solid 1px;
+    padding-top: 5px;
+    border-color: #AAAAAA;
+}
+.currentMyList:hover {
+    background-color: rgba(156, 39, 176, 0.5);
+}
 .loginInput {
     margin: auto;
     text-align: center;
@@ -17,10 +26,10 @@
     width: 25%;
 }
 .icon-block {
-  padding: 0 15px;
+    padding: 0 15px;
 }
 .icon-block .material-icons {
-	font-size: inherit;
+    font-size: inherit;
 }
 .adderBack {
     position: absolute;

@@ -19,6 +19,15 @@
         <script src="js/init.js"></script>
         <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
         <script>
+            $(document).ready(function() {
+                    $(".currentMyList").click(function(){                        
+                       var line = $(this).text();
+                       line = line.trim();
+                       console.log(line);
+                       $(".inputPickup").val(line);
+                    });
+                    
+            });
             function addToList() {
                 var current = $(".inputPickup").val();
                 var accent = $("#accent").val();
@@ -157,7 +166,13 @@
                 </div>
                 <div class="myList">
                     <div class="innerList">
-
+                        <ul>
+                            <c:forEach items="${currentPickups}" var="pickup">
+                                <li class="currentMyList">
+                                    ${pickup}
+                                </li>
+                            </c:forEach>
+                        </ul>
                     </div>
                 </div>
             </div>
