@@ -42,11 +42,11 @@ public class New extends HttpServlet {
                 request.getRequestDispatcher("Adder.jsp").forward(request, response);
             }            
             else {
-                request.getRequestDispatcher("signIn.jsp").forward(request, response);                 
+                request.getRequestDispatcher("SignIn").forward(request, response);                 
             }            
         }
         else {
-            request.getRequestDispatcher("signIn.jsp").forward(request, response);  
+            request.getRequestDispatcher("SignIn").forward(request, response);  
         }
     }
 

@@ -5,6 +5,9 @@
  *
  * Made By MaterializeCSS.com
  */
+main {
+    margin-bottom: 75px
+}
 .currentMyList {
     width: 98%;
     padding-left: 2%;
@@ -81,7 +84,7 @@
     overflow-y: scroll;
     border-radius: 10px;
 }
-.myIconLarge {
+.myIcon--large {
     font-size: 90px;
 }
 .indented {
@@ -90,7 +93,7 @@
 .dropBottom {
     padding-bottom: 10px;
 }
-.myIconLarge:hover {
+.myIcon:hover {
     color: rgba(156, 39, 176, 1);    
 }
 .mySmallIcon:hover {
@@ -100,4 +103,37 @@
     position: fixed;
     bottom: 0px;
     width: 100%;
+}
+.pickup__list {
+    
+    border-radius:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 30px auto;
+}
+.pickup__list__item {
+    background-color: rgba(156, 39, 176, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pickup__list__item *:first-child{
+    margin-right: auto;
+    width: 250px;
+}
+.pickup__list__item *:last-child {
+    margin-left: auto;
+}
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
 }

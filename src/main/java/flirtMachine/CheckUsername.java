@@ -42,17 +42,23 @@ public class CheckUsername extends HttpServlet {
         int id = 0;
         
         GetUsers userGetter = new GetUsers();
+        
         boolean exists = userGetter.existUsername(username, password, displayName);
         if (exists) {            
             response.setHeader("Cache-Control", "no-cache");        
             response.getWriter().write("invalid");
         }
         else {
+            String[] user = userGetter.getUserByUsernamePassword(username);
+            
             request.setAttribute("currentUserName", username);
-            request.setAttribute("currentName", name);
-            request.setAttribute("currentId", id);
             request.getSession().setAttribute("correctLogin", "true");
             request.getSession().setAttribute("loggedIn", "true");
+            signInCorrect = true;
+            name = user[0];
+            request.getSession().setAttribute("currentName", name);
+            id = Integer.parseInt(user[2]);
+            request.getSession().setAttribute("currentId", id);
             response.setHeader("Cache-Control", "no-cache");        
             response.getWriter().write("valid");
         }
