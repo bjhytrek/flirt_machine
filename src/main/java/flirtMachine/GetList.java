@@ -38,13 +38,13 @@ public class GetList extends HttpServlet {
         
         GetUsers getUser = new GetUsers();
         int userId = (int)request.getSession().getAttribute("currentId");
-        List<Pickups> userPickups= new ArrayList<>();
+        List<PickupItem> userPickups= new ArrayList<>();
         userPickups = getUser.getPickupLine(userId);
-        for (Pickups pickup: userPickups){
-                System.out.println(pickup.id);
+        for (PickupItem pickup: userPickups){
+                System.out.println(pickup.getId());
             }
-        System.out.println(userPickups.get(0).id);
-        request.getSession().setAttribute("pickups", userPickups);
+//        System.out.println(userPickups.get(0).id);
+        request.setAttribute("pickups", userPickups);
         request.getRequestDispatcher("myList.jsp").forward(request, response);
         
         

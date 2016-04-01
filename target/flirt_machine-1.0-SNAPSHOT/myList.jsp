@@ -17,6 +17,12 @@
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
         <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+        <script> function rate(starIndex, pickup_id){
+            var data = {'star_index': starIndex, 'pickup_id': pickup_id};
+            var url = "Ratings";
+            $.post(url, data, function (response) {
+                console.log(response);});
+        }</script>
     </head>
     <body>
         <%@ include file="components/header.jsp" %>
@@ -27,9 +33,13 @@
                     <li class="collection-header"><h3>My List</h3></li>
                         <c:forEach items="${pickups}" var="pickup" >
                         <li class="collection-item pickup__list__item">
-                            <div><p><c:out value="${pickup}" /></p></div>
+                            <div><p>${pickup.content}</p></div>
                             <div class="rating">
-                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                                <span onclick="rate(5, ${pickup.id})">☆</span>
+                                <span onclick="rate(4, ${pickup.id})">☆</span>
+                                <span onclick="rate(3, ${pickup.id})">☆</span>
+                                <span onclick="rate(2, ${pickup.id})">☆</span>
+                                <span onclick="rate(1, ${pickup.id})">☆</span>
                             </div>
                             <i class="material-icons myIcon Small" onclick="addToList()">volume_up</i>
                         </li>

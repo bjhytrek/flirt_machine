@@ -105,8 +105,8 @@ public class GetUsers {
         }
     }
 
-    public List<Pickups> getPickupLine(int userId) {
-        List<Pickups> lines = new ArrayList<>();
+    public List<PickupItem> getPickupLine(int userId) {
+        List<PickupItem> lines = new ArrayList<>();
         System.out.println("getPickupLine");
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -142,17 +142,44 @@ public class GetUsers {
                 System.out.println(id);
                 String line = rs2.getString("content");
                 System.out.println(line);
-                Pickups pickup = new Pickups(id, line);
+                PickupItem pickup = new PickupItem(id, line);
                 lines.add(pickup);
                 lineCount++;
             }
-            System.out.println(lines.get(0).id);
+//            System.out.println(lines.get(0).id);
             rs2.close();
             conn.close();
         } catch (Exception e) {
 
         }
         return lines;
+    }
+    public void addRating(int user_id, int pickup_id, int star_count) throws ClassNotFoundException, SQLException{
+        String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
+
+            //Database credentials
+            String USER = "flirt";
+            String PASS = "flirt-pass";
+
+            Connection conn = null;
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            String sql;
+            sql = "UPDATE user_pickup SET rate = " + star_count + " WHERE user_id = " + user_id + " AND pickup_id = " + pickup_id + ";";
+            
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            
+            System.out.println(sql);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("completed");
+            
+            conn.close();
     }
 
     public boolean existUsername(String username, String password, String displayName) throws ClassNotFoundException, SQLException {
