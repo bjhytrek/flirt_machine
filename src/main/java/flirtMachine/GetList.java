@@ -34,14 +34,17 @@ public class GetList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
+        System.out.println("get list is called");
         
         GetUsers getUser = new GetUsers();
         int userId = (int)request.getSession().getAttribute("currentId");
-        List<String> userPickups= new ArrayList<>();
+        List<Pickups> userPickups= new ArrayList<>();
         userPickups = getUser.getPickupLine(userId);
-        
-        request.setAttribute("pickups", userPickups);
+        for (Pickups pickup: userPickups){
+                System.out.println(pickup.id);
+            }
+        System.out.println(userPickups.get(0).id);
+        request.getSession().setAttribute("pickups", userPickups);
         request.getRequestDispatcher("myList.jsp").forward(request, response);
         
         

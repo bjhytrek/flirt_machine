@@ -104,8 +104,9 @@ public class GetUsers {
         }
     }
 
-    public List<String> getPickupLine(int userId) {
-        List<String> lines = new ArrayList<>();
+    public List<Pickups> getPickupLine(int userId) {
+        List<Pickups> lines = new ArrayList<>();
+        System.out.println("getPickupLine");
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
             String DB_URL = "jdbc:mysql://localhost/flirt_machine";
@@ -122,7 +123,7 @@ public class GetUsers {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             String sql;
-            sql = "SELECT p.content FROM user_pickup up INNER JOIN pickup p ON up.pickup_id = p.pickup_id WHERE up.user_id = ?;";
+            sql = "SELECT p.content, p.pickup_id FROM user_pickup up INNER JOIN pickup p ON up.pickup_id = p.pickup_id WHERE up.user_id = ?;";
             
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, userId);
@@ -135,11 +136,16 @@ public class GetUsers {
             
             
             while (rs2.next()) {
+                System.out.println("inside the while");
+                int id = rs2.getInt("pickup_id");
+                System.out.println(id);
                 String line = rs2.getString("content");
                 System.out.println(line);
-                lines.add(line);
+                Pickups pickup = new Pickups(id, line);
+                lines.add(pickup);
                 lineCount++;
             }
+            System.out.println(lines.get(0).id);
             rs2.close();
             conn.close();
         } catch (Exception e) {

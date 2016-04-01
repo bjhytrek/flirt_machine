@@ -36,7 +36,7 @@ public class New extends HttpServlet {
             if (request.getSession().getAttribute("loggedIn") == "true") {                
                 int userId = (int)request.getSession().getAttribute("currentId");
                 GetUsers getUsers = new GetUsers();
-                List<String> myPickups = getUsers.getPickupLine(userId);
+                List<Pickups> myPickups = getUsers.getPickupLine(userId);
                 System.out.println(myPickups);
                 request.setAttribute("currentPickups", myPickups);
                 request.getRequestDispatcher("Adder.jsp").forward(request, response);
