@@ -43,7 +43,7 @@ public class SignIn extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         if (request.getSession().getAttribute("loggedIn") != null) {
             if (request.getSession().getAttribute("loggedIn") == "true") {
-                request.getRequestDispatcher("myList.jsp").forward(request, response); //check the jsp name
+                request.getRequestDispatcher("GetList").forward(request, response); //check the jsp name
             }
             else {
                 request.getRequestDispatcher("Login").forward(request, response);

@@ -34,7 +34,7 @@ public class CreateAccount extends HttpServlet {
         if (request.getSession().getAttribute("loggedIn") != null) {
             System.out.println("inside");
             if (request.getSession().getAttribute("loggedIn") == "true") {
-                request.getRequestDispatcher("myList.jsp").forward(request, response); //check the jsp name
+                request.getRequestDispatcher("GetList").forward(request, response); //check the jsp name
             }
             else {
                 request.getRequestDispatcher("signUp.jsp").forward(request, response);                 

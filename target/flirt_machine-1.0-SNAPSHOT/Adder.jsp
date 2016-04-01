@@ -169,7 +169,7 @@
                         <ul>
                             <c:forEach items="${currentPickups}" var="pickup">
                                 <li class="currentMyList">
-                                    ${pickup.content}
+                                    ${pickup}
                                 </li>
                             </c:forEach>
                         </ul>

@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -163,7 +164,10 @@ public class GetUsers {
             //Database credentials
             String USER = "flirt";
             String PASS = "flirt-pass";
-
+            
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
+            System.out.println(password);
+            
             Connection conn = null;
 
             Class.forName("com.mysql.jdbc.Driver");
@@ -218,10 +222,11 @@ public class GetUsers {
         }
     }
 
-    public String[] getUserByUsernamePassword(String username, String password) {
+    public String[] getUserByUsernamePassword(String username) {
         String name = "";
         String myUsername = "";
         String id = "";
+        String password = "";
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
             String DB_URL = "jdbc:mysql://localhost/flirt_machine";
@@ -239,10 +244,9 @@ public class GetUsers {
 
             System.out.println("Creating statement...");
             String sql;
-            sql = "SELECT * FROM user WHERE username=? AND password=?;";
+            sql = "SELECT * FROM user WHERE username=?;";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
             ResultSet rs = preparedStatement.executeQuery();
 
             int userCount = 0;
@@ -250,6 +254,7 @@ public class GetUsers {
             while (rs.next()) {
                 name = rs.getString("name");
                 id = Integer.toString(rs.getInt("user_id"));
+                password = rs.getString("password");
                 userCount++;
             }
             rs.close();
@@ -258,10 +263,11 @@ public class GetUsers {
 
         }
         if (name != "") {
-            String[] myUser = new String[3];
+            String[] myUser = new String[4];
             myUser[0] = name;
             myUser[1] = username;
             myUser[2] = id;
+            myUser[3] = password;
 
             return myUser;
         } else {
