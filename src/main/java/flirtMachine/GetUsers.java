@@ -132,7 +132,6 @@ public class GetUsers {
            
             ResultSet rs2 = preparedStatement.executeQuery();
 
-<<<<<<< HEAD
             int lineCount = 0;            
             
             while (rs2.next()) {
@@ -149,13 +148,9 @@ public class GetUsers {
         return lines;        
     }
     
-    public List<String> getPickupLine(int userId) {
-        List<String> lines = new ArrayList<>();
-=======
     public List<PickupItem> getPickupLine(int userId) {
         List<PickupItem> lines = new ArrayList<>();
         System.out.println("getPickupLine");
->>>>>>> e7b931e26760ded4ad6a7229e5e663b5e16debdc
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
             String DB_URL = "jdbc:mysql://localhost/flirt_machine";
