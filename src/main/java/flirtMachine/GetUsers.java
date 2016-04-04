@@ -104,7 +104,50 @@ public class GetUsers {
 
         }
     }
+    
+    public List<String> getPickupLineNotMine(int userId) {
+        List<String> lines = new ArrayList<>();
+        try {
+            String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
 
+            //Database credentials
+            String USER = "flirt";
+            String PASS = "flirt-pass";
+
+            Connection conn = null;
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            String sql;
+            sql = "SELECT p.content FROM user_pickup up INNER JOIN pickup p ON up.pickup_id = p.pickup_id WHERE up.user_id <> ?;";
+            
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            
+            System.out.println(sql);
+           
+            ResultSet rs2 = preparedStatement.executeQuery();
+
+            int lineCount = 0;            
+            
+            while (rs2.next()) {
+                String line = rs2.getString("content");
+                System.out.println(line);
+                lines.add(line);
+                lineCount++;
+            }
+            rs2.close();
+            conn.close();
+        } catch (Exception e) {
+
+        }
+        return lines;        
+    }
+    
     public List<String> getPickupLine(int userId) {
         List<String> lines = new ArrayList<>();
         try {
@@ -215,7 +258,7 @@ public class GetUsers {
             return false;
         }
     }
-
+    
     public String[] getUserByUsernamePassword(String username) {
         String name = "";
         String myUsername = "";

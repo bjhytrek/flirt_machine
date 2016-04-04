@@ -20,17 +20,23 @@
                 var displayName = $("#displayName").val();
                 var username = $("#username").val();
                 var password = $("#password").val();
-                var url = "CheckUsername";
-                var data = {'displayName': displayName, 'username': username, 'password': password};
-                $.post(url, data, function(response) {
-                    console.log(response);
-                    if (response == "valid") {
-                        window.location.replace("SignIn");
-                    } 
-                    else {
-                        $(".credError").show();
-                    }
-                });
+                
+                if (displayName.length < 1 || username.length < 1 || password.length < 1) {
+                    $(".credError").show();
+                }
+                else {
+                    var url = "CheckUsername";
+                    var data = {'displayName': displayName, 'username': username, 'password': password};
+                    $.post(url, data, function(response) {
+                        console.log(response);
+                        if (response == "valid") {
+                            window.location.replace("SignIn");
+                        } 
+                        else {
+                            $(".credError").show();
+                        }
+                    });
+                }
             }
         </script>
         <title>Sign Up</title>

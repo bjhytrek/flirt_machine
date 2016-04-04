@@ -19,17 +19,22 @@
             function login() {
                 var username = $("#username").val();
                 var password = $("#password").val();
-                var url = "CheckCred";
-                var data = {'username': username, 'password': password};
-                $.post(url, data, function(response) {
-                    console.log(response);
-                    if (response == "correct") {
-                        window.location.replace("SignIn");
-                    } 
-                    else {
-                        $(".credError").show();
-                    }
-                });
+                if (username.length < 1 || password.length < 1) {
+                    $(".credError").show();
+                }
+                else {
+                    var url = "CheckCred";
+                    var data = {'username': username, 'password': password};
+                    $.post(url, data, function(response) {
+                        console.log(response);
+                        if (response == "correct") {
+                            window.location.replace("SignIn");
+                        } 
+                        else {
+                            $(".credError").show();
+                        }
+                    });
+                }
             }
         </script>
         <title>Sign In</title>
