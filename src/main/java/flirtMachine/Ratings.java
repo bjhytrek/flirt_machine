@@ -42,6 +42,8 @@ public class Ratings extends HttpServlet {
         GetUsers getUser = new GetUsers();
         int userId = (int) request.getSession().getAttribute("currentId");
         getUser.addRating(userId, pickup_id, star_count);
+        System.out.println("rated");
+        //request.getRequestDispatcher("myList.jsp").forward(request, response);
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

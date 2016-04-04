@@ -142,19 +142,19 @@
                                     <ul id="tries" class="indented">
                                         <c:if test="${sessionScope.currentTries.size() > 3}">
                                             <li class="dropBottom purpleHover"><i class="material-icons mySmallIcon">volume_up</i>&nbsp;&nbsp;${sessionScope.currentTries[3]}</li>
-                                            </c:if>
-                                            <c:if test="${sessionScope.currentTries.size() > 2}">
+                                        </c:if>
+                                        <c:if test="${sessionScope.currentTries.size() > 2}">
                                             <li class="dropBottom purpleHover"><i class="material-icons mySmallIcon">volume_up</i>&nbsp;&nbsp;${sessionScope.currentTries[2]}</li>
-                                            </c:if>
-                                            <c:if test="${sessionScope.currentTries.size() > 1}">
+                                        </c:if>
+                                        <c:if test="${sessionScope.currentTries.size() > 1}">
                                             <li class="dropBottom purpleHover"><i class="material-icons mySmallIcon">volume_up</i>&nbsp;&nbsp;${sessionScope.currentTries[1]}</li>
-                                            </c:if>
-                                            <c:if test="${sessionScope.currentTries.size() > 0}">
+                                        </c:if>
+                                        <c:if test="${sessionScope.currentTries.size() > 0}">
                                             <li class="dropBottom purpleHover"><i class="material-icons mySmallIcon">volume_up</i>&nbsp;&nbsp;${sessionScope.currentTries[0]}</li>
-                                            </c:if>
-                                            <c:if test="${!(sessionScope.currentTries.size() > 0)}">
+                                        </c:if>
+                                        <c:if test="${!(sessionScope.currentTries.size() > 0)}">
                                             <li class="dropBottom purpleHover">No Attempts Yet</li>
-                                            </c:if>
+                                        </c:if>
                                     </ul>
                                 </td>
                                 <td class="adderSecond">

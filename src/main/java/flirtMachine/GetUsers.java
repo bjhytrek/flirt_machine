@@ -28,11 +28,23 @@ public class GetUsers {
     public void addPickupLine(int userId, String pickUpLine) {
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
-
-            //Database credentials
-            String USER = "flirt";
-            String PASS = "flirt-pass";
+            String USER = "";
+            String PASS = "";
+            String DB_URL = "";
+            String openShiftCheck = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+            
+            if (openShiftCheck == null || openShiftCheck == "") {
+                DB_URL = "jdbc:mysql://localhost/flirt_machine";
+                USER = "flirt";
+                PASS = "flirt-pass"; 
+            }
+            else {
+                String HOST = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+                String PORT = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+                DB_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/flirt_machine";
+                USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+                PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            }
 
             Connection conn = null;
 
@@ -105,59 +117,28 @@ public class GetUsers {
         }
     }
     
-    public List<String> getPickupLineNotMine(int userId) {
-        List<String> lines = new ArrayList<>();
-        try {
-            String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
-
-            //Database credentials
-            String USER = "flirt";
-            String PASS = "flirt-pass";
-
-            Connection conn = null;
-
-            Class.forName("com.mysql.jdbc.Driver");
-
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            String sql;
-            sql = "SELECT p.content FROM user_pickup up INNER JOIN pickup p ON up.pickup_id = p.pickup_id WHERE up.user_id <> ?;";
-            
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, userId);
-            
-            System.out.println(sql);
-           
-            ResultSet rs2 = preparedStatement.executeQuery();
-
-            int lineCount = 0;            
-            
-            while (rs2.next()) {
-                String line = rs2.getString("content");
-                System.out.println(line);
-                lines.add(line);
-                lineCount++;
-            }
-            rs2.close();
-            conn.close();
-        } catch (Exception e) {
-
-        }
-        return lines;        
-    }
-    
-    public List<PickupItem> getPickupLine(int userId) {
+    public List<PickupItem> getPickupLineNotMine(int userId) {
         List<PickupItem> lines = new ArrayList<>();
         System.out.println("getPickupLine");
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
-
-            //Database credentials
-            String USER = "flirt";
-            String PASS = "flirt-pass";
+            String USER = "";
+            String PASS = "";
+            String DB_URL = "";
+            String openShiftCheck = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+            
+            if (openShiftCheck == null || openShiftCheck == "") {
+                DB_URL = "jdbc:mysql://localhost/flirt_machine";
+                USER = "flirt";
+                PASS = "flirt-pass"; 
+            }
+            else {
+                String HOST = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+                String PORT = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+                DB_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/flirt_machine";
+                USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+                PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            }
 
             Connection conn = null;
 
@@ -167,7 +148,7 @@ public class GetUsers {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             String sql;
-            sql = "SELECT p.content, p.pickup_id FROM user_pickup up INNER JOIN pickup p ON up.pickup_id = p.pickup_id WHERE up.user_id = ?;";
+            sql = "SELECT p.content, p.pickup_id, up.rate FROM user_pickup up INNER JOIN pickup p ON up.pickup_id = p.pickup_id WHERE up.user_id <> ? ORDER BY up.rate DESC;";
             
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, userId);
@@ -182,10 +163,92 @@ public class GetUsers {
             while (rs2.next()) {
                 System.out.println("inside the while");
                 int id = rs2.getInt("pickup_id");
+                int rating;
+                boolean isRated;
+                if (rs2.getInt("rate") > 0) {
+                    rating = rs2.getInt("rate");
+                    isRated = true;
+                }
+                else {
+                    rating = 0;
+                    isRated = false;
+                }
                 System.out.println(id);
                 String line = rs2.getString("content");
                 System.out.println(line);
-                PickupItem pickup = new PickupItem(id, line);
+                PickupItem pickup = new PickupItem(id, line, rating, isRated);
+                lines.add(pickup);
+                lineCount++;
+            }
+//            System.out.println(lines.get(0).id);
+            rs2.close();
+            conn.close();
+        } catch (Exception e) {
+
+        }
+        return lines;     
+    }
+    
+    public List<PickupItem> getPickupLine(int userId) {
+        List<PickupItem> lines = new ArrayList<>();
+        System.out.println("getPickupLine");
+        try {
+            String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+            String USER = "";
+            String PASS = "";
+            String DB_URL = "";
+            String openShiftCheck = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+            
+            if (openShiftCheck == null || openShiftCheck == "") {
+                DB_URL = "jdbc:mysql://localhost/flirt_machine";
+                USER = "flirt";
+                PASS = "flirt-pass"; 
+            }
+            else {
+                String HOST = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+                String PORT = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+                DB_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/flirt_machine";
+                USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+                PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            }
+
+            Connection conn = null;
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            String sql;
+            sql = "SELECT p.content, p.pickup_id, up.rate FROM user_pickup up INNER JOIN pickup p ON up.pickup_id = p.pickup_id WHERE up.user_id = ? ORDER BY up.rate DESC;";
+            
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            
+            System.out.println(sql);
+           
+            ResultSet rs2 = preparedStatement.executeQuery();
+
+            int lineCount = 0;
+            
+            
+            while (rs2.next()) {
+                System.out.println("inside the while");
+                int id = rs2.getInt("pickup_id");
+                int rating;
+                boolean isRated;
+                if (rs2.getInt("rate") > 0) {
+                    rating = rs2.getInt("rate");
+                    isRated = true;
+                }
+                else {
+                    rating = 0;
+                    isRated = false;
+                }
+                System.out.println(id);
+                String line = rs2.getString("content");
+                System.out.println(line);
+                PickupItem pickup = new PickupItem(id, line, rating, isRated);
                 lines.add(pickup);
                 lineCount++;
             }
@@ -199,11 +262,23 @@ public class GetUsers {
     }
     public void addRating(int user_id, int pickup_id, int star_count) throws ClassNotFoundException, SQLException{
         String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
-
-            //Database credentials
-            String USER = "flirt";
-            String PASS = "flirt-pass";
+            String USER = "";
+            String PASS = "";
+            String DB_URL = "";
+            String openShiftCheck = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+            
+            if (openShiftCheck == null || openShiftCheck == "") {
+                DB_URL = "jdbc:mysql://localhost/flirt_machine";
+                USER = "flirt";
+                PASS = "flirt-pass"; 
+            }
+            else {
+                String HOST = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+                String PORT = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+                DB_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/flirt_machine";
+                USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+                PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            }
 
             Connection conn = null;
 
@@ -229,11 +304,23 @@ public class GetUsers {
         int userCount = 0;
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
-
-            //Database credentials
-            String USER = "flirt";
-            String PASS = "flirt-pass";
+            String USER = "";
+            String PASS = "";
+            String DB_URL = "";
+            String openShiftCheck = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+            
+            if (openShiftCheck == null || openShiftCheck == "") {
+                DB_URL = "jdbc:mysql://localhost/flirt_machine";
+                USER = "flirt";
+                PASS = "flirt-pass"; 
+            }
+            else {
+                String HOST = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+                String PORT = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+                DB_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/flirt_machine";
+                USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+                PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            }
             
             password = BCrypt.hashpw(password, BCrypt.gensalt());
             System.out.println(password);
@@ -264,12 +351,23 @@ public class GetUsers {
             return true;
         } else {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
-
-            //Database credentials
-            String USER = "flirt";
-            String PASS = "flirt-pass";
-
+            String USER = "";
+            String PASS = "";
+            String DB_URL = "";
+            String openShiftCheck = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+            
+            if (openShiftCheck == null || openShiftCheck == "") {
+                DB_URL = "jdbc:mysql://localhost/flirt_machine";
+                USER = "flirt";
+                PASS = "flirt-pass"; 
+            }
+            else {
+                String HOST = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+                String PORT = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+                DB_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/flirt_machine";
+                USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+                PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            }
             Connection conn = null;
 
             Class.forName("com.mysql.jdbc.Driver");
@@ -299,11 +397,23 @@ public class GetUsers {
         String password = "";
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-            String DB_URL = "jdbc:mysql://localhost/flirt_machine";
-
-            //Database credentials
-            String USER = "flirt";
-            String PASS = "flirt-pass";
+            String USER = "";
+            String PASS = "";
+            String DB_URL = "";
+            String openShiftCheck = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+            
+            if (openShiftCheck == null || openShiftCheck == "") {
+                DB_URL = "jdbc:mysql://localhost/flirt_machine";
+                USER = "flirt";
+                PASS = "flirt-pass"; 
+            }
+            else {
+                String HOST = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+                String PORT = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+                DB_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/flirt_machine";
+                USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+                PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            }
 
             Connection conn = null;
 

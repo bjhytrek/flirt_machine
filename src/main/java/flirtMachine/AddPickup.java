@@ -31,11 +31,8 @@ public class AddPickup extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-       
+            throws ServletException, IOException {       
         GetUsers getUsers = new GetUsers();
-        System.out.println(request.getParameter("currentId"));
         int currentId = (int)request.getSession().getAttribute("currentId");
         getUsers.addPickupLine(currentId, request.getParameter("pickupLine"));
         request.getRequestDispatcher("GetList").forward(request, response);

@@ -21,7 +21,13 @@
             var data = {'star_index': starIndex, 'pickup_id': pickup_id};
             var url = "Ratings";
             $.post(url, data, function (response) {
-                console.log(response);});
+                console.log(response);
+                window.location.href = "GetList";
+            });
+        }
+        function playLine(myLine) {
+            var accent = "UK English Female";
+            responsiveVoice.speak(myLine, accent);
         }</script>
     </head>
     <body>
@@ -34,14 +40,55 @@
                         <c:forEach items="${pickups}" var="pickup" >
                         <li class="collection-item pickup__list__item">
                             <div><p>${pickup.content}</p></div>
-                            <div class="rating">
-                                <span onclick="rate(5, ${pickup.id})">☆</span>
-                                <span onclick="rate(4, ${pickup.id})">☆</span>
-                                <span onclick="rate(3, ${pickup.id})">☆</span>
-                                <span onclick="rate(2, ${pickup.id})">☆</span>
-                                <span onclick="rate(1, ${pickup.id})">☆</span>
-                            </div>
-                            <i class="material-icons myIcon Small" onclick="addToList()">volume_up</i>
+                            <c:if test="${pickup.isRated == true}">
+                                <div class="cRating">
+                                    <c:if test="${pickup.rating == 1}">
+                                        <span onclick="rate(5, ${pickup.id})">☆</span>
+                                        <span onclick="rate(4, ${pickup.id})">☆</span>
+                                        <span onclick="rate(3, ${pickup.id})">☆</span>
+                                        <span onclick="rate(2, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(1, ${pickup.id})">"☆"</span>
+                                    </c:if>
+                                    <c:if test="${pickup.rating == 2}">
+                                        <span onclick="rate(5, ${pickup.id})">☆</span>
+                                        <span onclick="rate(4, ${pickup.id})">☆</span>
+                                        <span onclick="rate(3, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(2, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(1, ${pickup.id})">☆</span>
+                                    </c:if>
+                                    <c:if test="${pickup.rating == 3}">
+                                        <span onclick="rate(5, ${pickup.id})">☆</span>
+                                        <span onclick="rate(4, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(3, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(2, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(1, ${pickup.id})">☆</span>
+                                    </c:if>
+                                    <c:if test="${pickup.rating == 4}">
+                                        <span onclick="rate(5, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(4, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(3, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(2, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(1, ${pickup.id})">☆</span>
+                                    </c:if>
+                                    <c:if test="${pickup.rating == 5}">
+                                        <span class="chosenRating" onclick="rate(5, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(4, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(3, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(2, ${pickup.id})">☆</span>
+                                        <span class="chosenRating" onclick="rate(1, ${pickup.id})">☆</span>
+                                    </c:if>
+                                </div>
+                            </c:if>
+                            <c:if test="${pickup.isRated == false}">
+                                <div class="rating">
+                                    <span onclick="rate(5, ${pickup.id})">☆</span>
+                                    <span onclick="rate(4, ${pickup.id})">☆</span>
+                                    <span onclick="rate(3, ${pickup.id})">☆</span>
+                                    <span onclick="rate(2, ${pickup.id})">☆</span>
+                                    <span onclick="rate(1, ${pickup.id})">☆</span>
+                                </div>
+                            </c:if>                            
+                            <i class="material-icons myIcon Small" onclick="playLine('${pickup.content}')">volume_up</i>
                         </li>
                     </c:forEach>
                 </ul>

@@ -12,6 +12,31 @@ package flirtMachine;
 public class PickupItem {
     private int id;
     private String content;
+    private int rating;
+    private boolean isRated;
+
+    public boolean isIsRated() {
+        return isRated;
+    }
+
+    public PickupItem(int id, String content, int rating, boolean isRated) {
+        this.id = id;
+        this.content = content;
+        this.rating = rating;
+        this.isRated = isRated;
+    }
+
+    public void setIsRated(boolean isRated) {
+        this.isRated = isRated;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
     public int getId() {
         return id;
@@ -27,11 +52,5 @@ public class PickupItem {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public PickupItem(int id, String content) {
-        this.id = id;
-        this.content = content;
-    }
-    
+    }    
 }

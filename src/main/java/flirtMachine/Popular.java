@@ -17,10 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author mac_lappy
+ * @author Jbeag_000
  */
-@WebServlet(name = "GetList", urlPatterns = {"/GetList"})
-public class GetList extends HttpServlet {
+@WebServlet(name = "Popular", urlPatterns = {"/Popular"})
+public class Popular extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,21 +33,16 @@ public class GetList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("get list is called");
-        
         GetUsers getUser = new GetUsers();
         int userId = (int)request.getSession().getAttribute("currentId");
         List<PickupItem> userPickups= new ArrayList<>();
-        userPickups = getUser.getPickupLine(userId);
+        userPickups = getUser.getPickupLineNotMine(userId);
         for (PickupItem pickup: userPickups){
                 System.out.println(pickup.getId());
             }
 //        System.out.println(userPickups.get(0).id);
         request.setAttribute("pickups", userPickups);
-        request.getRequestDispatcher("myList.jsp").forward(request, response);
-        
-        
-        
+        request.getRequestDispatcher("popular.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

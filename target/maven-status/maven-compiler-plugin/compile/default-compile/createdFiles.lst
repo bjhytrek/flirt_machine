@@ -8,5 +8,8 @@ flirtMachine\GetList.class
 flirtMachine\GetUsers.class
 flirtMachine\AddPickup.class
 flirtMachine\New.class
+flirtMachine\Ratings.class
 flirtMachine\Logout.class
+flirtMachine\PickupItem.class
+flirtMachine\Popular.class
 flirtMachine\SignIn.class
